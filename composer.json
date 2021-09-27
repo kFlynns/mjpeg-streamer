@@ -1,0 +1,18 @@
+{
+    "name": "k-flynns/mjpeg-streamer",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kFlynns",
+            "email": "erik.calov@quokkabyte.org",
+            "homepage": "https://quokkabyte.org"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Kflynns\\JpegStreamer\\": "lib/"
+        }
+    }
+}
