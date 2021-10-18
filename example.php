@@ -20,7 +20,7 @@ $proxy = new FileArray([
     __DIR__ . '/example/frame_10.jpg',
 ]);
 
-$proxy->configureCache(4, Cache::class);
+$proxy->configureCache(Cache::class, 4);
 
 
 $stream = new Stream($proxy);

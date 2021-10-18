@@ -6,10 +6,10 @@ interface IProxy
 {
 
     /**
-     * @param int $framesPerSecond
      * @param string $fqnCacheClass
+     * @param int $framesPerSecond
      */
-    public function configureCache(int $framesPerSecond, string $fqnCacheClass): void;
+    public function configureCache(string $fqnCacheClass, int $framesPerSecond): void;
 
     /**
      * @return int
@@ -20,5 +20,16 @@ interface IProxy
      * @return string
      */
     public function getCachedFrame(): ?string;
+
+    /**
+     * @return string
+     */
+    public function getCachedContentId(): ?string;
+
+    /**
+     * @return string
+     */
+    public function getProxySourceId(): string;
+
 
 }

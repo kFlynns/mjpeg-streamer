@@ -2,6 +2,8 @@
 
 namespace Kflynns\JpegStreamer\Proxy\Cache;
 
+use Kflynns\JpegStreamer\Proxy\IProxy;
+
 class File extends AbstractCache
 {
 
@@ -12,13 +14,13 @@ class File extends AbstractCache
     protected $bufferSize;
 
     /**
-     * @param int $ttl
+     * @param IProxy $proxy
      */
-    public function __construct(int $ttl)
+    public function __construct(IProxy $proxy)
     {
-        $this->handle = fopen(tempnam(sys_get_temp_dir(), 'kflynns_jpegstreamer_'), 'w+');
+        parent::__construct($proxy);
+        $this->handle = fopen(sys_get_temp_dir() . '/kflynns_mjpeg-streamer_' . $this->getProxySourceId() . '_cache', 'w+');
         $this->bufferSize = 0;
-        parent::__construct($ttl);
     }
 
     public function __destruct()

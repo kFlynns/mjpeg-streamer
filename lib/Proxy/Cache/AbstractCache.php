@@ -2,6 +2,8 @@
 
 namespace Kflynns\JpegStreamer\Proxy\Cache;
 
+use Kflynns\JpegStreamer\Proxy\IProxy;
+
 class AbstractCache implements ICache
 {
 
@@ -10,6 +12,9 @@ class AbstractCache implements ICache
 
     /** @var float  */
     protected $lastTick;
+
+    /** @var string */
+    protected $proxySourceId;
 
     /**
      * @return float
@@ -20,12 +25,13 @@ class AbstractCache implements ICache
     }
 
     /**
-     * @param int $ttl
+     * @param IProxy $proxy
      */
-    public function __construct(int $ttl)
+    public function __construct(IProxy $proxy)
     {
-        $this->ttl = $ttl;
+        $this->ttl = 1 / $proxy->getFramesPerSecond() * 1000;
         $this->lastTick = 0;
+        $this->proxySourceId = $proxy->getProxySourceId();
     }
 
 
@@ -37,6 +43,14 @@ class AbstractCache implements ICache
     protected function getValue(): ?string
     {
         throw new \Exception(self::class . ': "' . get_class($this) . '" must implement method "getValue".');
+    }
+
+    /**
+     * @return string
+     */
+    public function getProxySourceId(): string
+    {
+        return $this->proxySourceId;
     }
 
     /**
@@ -60,5 +74,9 @@ class AbstractCache implements ICache
         $this->lastTick = $this->getTick();
         $this->setValue($value);
     }
+
+
+
+
 
 }

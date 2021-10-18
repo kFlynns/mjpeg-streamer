@@ -14,6 +14,9 @@ class FileArray extends AbstractProxy
     /** @var int */
     protected $count;
 
+    /** @var string */
+    protected $proxySourceId;
+
     /**
      * @param array $imagePaths
      */
@@ -23,6 +26,7 @@ class FileArray extends AbstractProxy
         // load to ram
         foreach (array_reverse($imagePaths) as $path)
         {
+            $this->proxySourceId = hash('md5', $this->proxySourceId . $path);
             $handle = fopen($path, 'r');
             fseek($handle, SEEK_SET);
             $buffer = '';
@@ -37,6 +41,16 @@ class FileArray extends AbstractProxy
         $this->count = count($this->frames);
     }
 
+
+    /**
+     * Return an identifier for the used source.
+     * @return string
+     */
+    public function getProxySourceId(): string
+    {
+        return $this->proxySourceId;
+    }
+
     /**
      * @return string|null
      */
@@ -46,7 +60,6 @@ class FileArray extends AbstractProxy
         {
             $this->frame = 0;
         }
-        //file_put_contents(__DIR__ . '/a', $this->frame . "\n", FILE_APPEND);
         return $this->frames[$this->frame++];
     }
 

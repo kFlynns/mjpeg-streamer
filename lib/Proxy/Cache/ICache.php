@@ -2,12 +2,14 @@
 
 namespace Kflynns\JpegStreamer\Proxy\Cache;
 
+use Kflynns\JpegStreamer\Proxy\IProxy;
+
 interface ICache
 {
     /**
-     * @param int $ttl
+     * @param IProxy $proxy
      */
-    public function __construct(int $ttl);
+    public function __construct(IProxy $proxy);
 
     /**
      * @return ?string
