@@ -7,9 +7,6 @@ use Kflynns\JpegStreamer\Stream;
 require __DIR__ . '/vendor/autoload.php';
 
 
-
-
-
 $proxy = new FileArray([
     __DIR__ . '/example/frame_1.jpg',
     __DIR__ . '/example/frame_2.jpg',
@@ -22,11 +19,8 @@ $proxy = new FileArray([
     __DIR__ . '/example/frame_9.jpg',
     __DIR__ . '/example/frame_10.jpg',
 ]);
-$proxy->setFramesPerSecond(1);
-$proxy->setCache(Cache::class, 10);
 
-
-
+$proxy->configureCache(4, Cache::class);
 
 
 $stream = new Stream($proxy);

@@ -7,8 +7,9 @@ interface IProxy
 
     /**
      * @param int $framesPerSecond
+     * @param string $fqnCacheClass
      */
-    public function setFramesPerSecond($framesPerSecond): void;
+    public function configureCache(int $framesPerSecond, string $fqnCacheClass): void;
 
     /**
      * @return int
@@ -19,11 +20,5 @@ interface IProxy
      * @return string
      */
     public function getCachedFrame(): ?string;
-
-    /**
-     * @param string $fqnCacheClass
-     * @param int $ttl
-     */
-    public function setCache(string $fqnCacheClass, int $ttl): void;
 
 }

@@ -8,6 +8,12 @@ class FileArray extends AbstractProxy
     /** @var array  */
     protected $frames;
 
+    /** @var int */
+    protected $frame;
+
+    /** @var int */
+    protected $count;
+
     /**
      * @param array $imagePaths
      */
@@ -25,10 +31,10 @@ class FileArray extends AbstractProxy
                 $buffer .= fread($handle, 1024);
             }
             $this->frames[] = $buffer;
-            $this->frames[] = $buffer;
-            $this->frames[] = $buffer;
             fclose($handle);
         }
+        $this->frame = 0;
+        $this->count = count($this->frames);
     }
 
     /**
@@ -36,7 +42,12 @@ class FileArray extends AbstractProxy
      */
     public function getFrame(): ?string
     {
-        return array_pop($this->frames);
+        if ($this->frame >= $this->count)
+        {
+            $this->frame = 0;
+        }
+        //file_put_contents(__DIR__ . '/a', $this->frame . "\n", FILE_APPEND);
+        return $this->frames[$this->frame++];
     }
 
 

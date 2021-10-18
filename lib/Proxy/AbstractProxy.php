@@ -41,8 +41,13 @@ class AbstractProxy implements IProxy
     /**
      * @param int $framesPerSecond
      */
-    public function setFramesPerSecond($framesPerSecond): void
+    public function configureCache(int $framesPerSecond, string $fqnClassCache): void
     {
+        $this->cache = new $fqnClassCache(1 / $framesPerSecond * 1000);
+        if (!is_a($this->cache, ICache::class))
+        {
+            throw new \InvalidArgumentException(self::class . ': "' . $fqnClassCache . '" does not implement ' . ICache::class);
+        }
         $this->framesPerSecond = $framesPerSecond;
     }
 
@@ -54,17 +59,4 @@ class AbstractProxy implements IProxy
         return $this->framesPerSecond;
     }
 
-    /**
-     * @param string $fqnCacheClass
-     * @param int $ttl
-     * @throws \Exception
-     */
-    public function setCache(string $fqnCacheClass, int $ttl): void
-    {
-        $this->cache = new $fqnCacheClass($ttl);
-        if (!is_a($this->cache, ICache::class))
-        {
-            throw new \Exception($fqnCacheClass . ' does not implement ICache interface.');
-        }
-    }
 }

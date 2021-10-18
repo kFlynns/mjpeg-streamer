@@ -46,7 +46,7 @@ class Stream
     {
         if (headers_sent())
         {
-            throw new \Exception(self::class . ': could not start stream because output has already started.');
+            throw new \RuntimeException(self::class . ': could not start stream because output has already started.');
         }
         set_time_limit(0);
         @ini_set('zlib.output_compression', 0);
@@ -85,8 +85,8 @@ class Stream
             {
                 break;
             }
-            $this->sendChunk($frame);
             usleep(1000000 * (1 / $this->proxy->getFramesPerSecond()));
+            $this->sendChunk($frame);
         } while (true);
     }
 
